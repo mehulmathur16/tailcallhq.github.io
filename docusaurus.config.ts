@@ -59,7 +59,7 @@ export default {
       }),
     },
   ],
-  url: "https://tailcall.run",
+  url: "https://mehulmathur16.github.io/tailcallhq.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
