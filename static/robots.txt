@@ -1,2 +1,4 @@
+# Algolia-Crawler-Verif: EBF804E5CB5BC830
+
 User-agent: *
 Disallow: /docs/contributors/
