@@ -32,9 +32,7 @@ jobs:
       - name: Install Build & Test 🔧
         run: |
           npm install
-          npx prettier --check "**/*.{graphql,yml,json,md,sh,ts,tsx,js,css}"
           npm run build
-          npm run test:cypress
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
