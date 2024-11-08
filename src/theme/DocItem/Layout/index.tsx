@@ -47,7 +47,7 @@ export default function DocItemLayout({children}: DocItemLayoutProps) {
         reactionsEnabled="1"
         emitMetadata="1"
         inputPosition="top"
-        theme={"https://tailcall.run/css/giscus-theme.css"}
+        theme={"https://mehulmathur16.github.io/tailcallhq.github.io/css/giscus-theme.css"}
         lang="en"
         strict="0"
         loading="lazy"
