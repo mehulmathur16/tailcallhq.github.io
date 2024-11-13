@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import styles from "./styles.module.css"
 import clsx from "clsx"
 
@@ -13,20 +13,45 @@ interface ConsentOption {
   onClick?: () => void
 }
 
+interface PreferenceOption {
+  name: string
+  selected: boolean
+  readonly?: boolean
+}
+
 const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, onClose}) => {
+  const [showPreferences, setShowPreferences] = useState(false)
+
   const consentOptions: Array<ConsentOption> = [
     {
       text: "Accept All",
-      onClick: onAccept,
+      onClick: () => {
+        onAccept()
+        if (onClose) onClose()
+      },
     },
-    {
-      text: "Manage Settings",
-      onClick: () => undefined,
-    },
+    ...[
+      showPreferences
+        ? {text: "Accept Selected", onClick: () => undefined}
+        : {
+            text: "Manage Settings",
+            onClick: () => setShowPreferences(true),
+          },
+    ],
     {
       text: "Deny",
+      onClick: onClose,
     },
   ]
+
+  const initialPreferences: Array<PreferenceOption> = [
+    {name: "Neccessary", selected: true, readonly: true},
+    {name: "Analytics", selected: false},
+    {name: "Preference", selected: false},
+    {name: "Marketing", selected: false},
+  ]
+
+  const [preferences, setPreferences] = useState(initialPreferences)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -39,6 +64,14 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
       document.body.style.overflow = "visible"
     }
   }, [open])
+
+  const handlePreferenceToggle = (index: number) => {
+    if (preferences[index].readonly) return
+
+    const updatedPreferences = [...preferences]
+    updatedPreferences[index].selected = !updatedPreferences[index].selected
+    setPreferences(updatedPreferences)
+  }
 
   return (
     <>
@@ -59,15 +92,34 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                   styles.bodyContainer,
                 )}
               >
-                <div className="flex flex-col items-center justify-center p-3 gap-2 text-center">
+                <div className="flex flex-col items-center justify-center p-3 gap-2 text-center text-tailCall-light-300">
                   <img src={require("@site/static/images/cookie-consent/cookie.png").default} height={54} width={54} />
-                  <span className="text-title-medium text-tailCall-light-300">We Value Your Privacy</span>
-                  <span className="text-content-small text-tailCall-light-300">
+                  <span className="text-title-medium">We Value Your Privacy</span>
+                  <span className="text-content-small">
                     Our website uses some cookies and records your IP address for the purposes of accessibility,
                     security, and managing your access to the telecommunication network. You can disable data collection
                     and cookies by changing your browser settings, but it may affect how this website functions, Learn
                     more.
                   </span>
+                  {showPreferences && (
+                    <div className="grid grid-cols-2 gap-x-5">
+                      {preferences.map((preference: PreferenceOption, index: number) => {
+                        return (
+                          <span
+                            key={index}
+                            className={clsx(
+                              "flex cursor-pointer text-content-small gap-2 p-1",
+                              preference.selected ? "text-tailCall-light-600" : "",
+                            )}
+                            onClick={() => handlePreferenceToggle(index)}
+                          >
+                            <span className="whitespace-pre">{`${preference.selected ? `[ X ]` : `[   ]`}`}</span>
+                            <span>{preference.name}</span>
+                          </span>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-6">
                   {consentOptions.map((btn: ConsentOption, index: number) => {
@@ -78,10 +130,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                           "py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer",
                           styles.consentOption,
                         )}
-                        onClick={() => {
-                          if (btn.onClick) btn.onClick()
-                          if (onClose) onClose()
-                        }}
+                        onClick={btn.onClick}
                       >
                         {btn.text}
                       </span>
