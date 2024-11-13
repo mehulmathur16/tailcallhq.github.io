@@ -4,18 +4,20 @@ import clsx from "clsx"
 
 interface CookieConsentModalProps {
   open: boolean
+  onAccept: () => void
+  onClose?: () => void
 }
 
 interface ConsentOption {
   text: string
-  onClick: any
+  onClick?: () => void
 }
 
-const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open}) => {
+const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, onClose}) => {
   const consentOptions: Array<ConsentOption> = [
     {
       text: "Accept All",
-      onClick: () => undefined,
+      onClick: onAccept,
     },
     {
       text: "Manage Settings",
@@ -23,11 +25,8 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open}) => {
     },
     {
       text: "Deny",
-      onClick: () => undefined,
     },
   ]
-
-  const [selectedConsentOption, setSelectedConsentOption] = useState(consentOptions[0])
 
   return (
     <>
@@ -58,7 +57,10 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open}) => {
                         "py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer",
                         styles.consentOption,
                       )}
-                      onClick={btn.onClick}
+                      onClick={() => {
+                        if (btn.onClick) btn.onClick()
+                        if (onClose) onClose()
+                      }}
                     >
                       {btn.text}
                     </span>
