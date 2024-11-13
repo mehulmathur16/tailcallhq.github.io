@@ -6,6 +6,11 @@
   z-index: calc(var(--ifm-z-index-fixed) + 2);
 }
 
+.modalOverlay {
+  z-index: calc(var(--ifm-z-index-fixed) + 1);
+  backdrop-filter: blur(12px);
+}
+
 .consentOption {
   color: #868687;
   box-shadow: 6px 6px 0px 0px rgba(50, 51, 53, 1);
@@ -24,6 +29,12 @@
 .modalHeading {
   top: 0;
   left: 50%;
+  transform: translate(-50%, calc(-50% + 4px));
+}
+
+.closeBtn {
+  top: 0;
+  right: 30px;
   transform: translate(-50%, calc(-50% + 4px));
 }
 
