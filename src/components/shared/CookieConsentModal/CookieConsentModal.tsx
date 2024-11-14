@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useMemo, useState} from "react"
 import styles from "./styles.module.css"
 import clsx from "clsx"
 
 interface CookieConsentModalProps {
   open: boolean
   onAccept: () => void
+  onDeny: () => void
+  onPartialAccept: (preferences: string[]) => void
   onClose?: () => void
 }
 
@@ -19,20 +21,22 @@ interface PreferenceOption {
   readonly?: boolean
 }
 
-const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, onClose}) => {
+const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, onDeny, onPartialAccept, onClose}) => {
   const [showPreferences, setShowPreferences] = useState(false)
 
   const consentOptions: Array<ConsentOption> = [
     {
       text: "Accept All",
-      onClick: () => {
-        onAccept()
-        if (onClose) onClose()
-      },
+      onClick: onAccept,
     },
     ...[
       showPreferences
-        ? {text: "Accept Selected", onClick: () => undefined}
+        ? {
+            text: "Accept Selected",
+            onClick: () => {
+              onPartialAccept(selectedPreferencesNames)
+            },
+          }
         : {
             text: "Manage Settings",
             onClick: () => setShowPreferences(true),
@@ -40,7 +44,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
     ],
     {
       text: "Deny",
-      onClick: onClose,
+      onClick: onDeny,
     },
   ]
 
@@ -52,6 +56,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
   ]
 
   const [preferences, setPreferences] = useState(initialPreferences)
+
+  const selectedPreferencesNames = useMemo(() => {
+    return preferences.reduce((acc: string[], preference: PreferenceOption) => {
+      if (preference.selected) acc.push(preference.name)
+      return acc
+    }, [])
+  }, [preferences])
 
   useEffect(() => {
     if (typeof window === "undefined") return

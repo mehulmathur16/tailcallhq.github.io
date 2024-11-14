@@ -4,10 +4,10 @@ import {reb2bScriptContent} from "@site/src/constants"
 
 interface GlobalHeadProps {
   isCookieConsentAccepted?: boolean
-  preferences?: String[]
+  preferences?: string[]
 }
 
-const GlobalHead: React.FC<GlobalHeadProps> = ({isCookieConsentAccepted = false}) => {
+const GlobalHead: React.FC<GlobalHeadProps> = ({isCookieConsentAccepted = false, preferences}) => {
   const injectAnalyticsScripts = () => {
     return (
       <>
@@ -21,7 +21,26 @@ const GlobalHead: React.FC<GlobalHeadProps> = ({isCookieConsentAccepted = false}
     )
   }
 
-  return <Head>{isCookieConsentAccepted ? injectAnalyticsScripts() : <></>}</Head>
+  const injectScripts = (preferences: string[] | undefined): JSX.Element[] => {
+    const activeScripts: JSX.Element[] = []
+
+    const preferenceMapping: Record<string, () => JSX.Element> = {
+      Analytics: injectAnalyticsScripts,
+    }
+
+    if (!preferences) {
+      Object.values(preferenceMapping).forEach((injectFunction) => activeScripts.push(injectFunction()))
+    } else {
+      preferences.forEach((preference) => {
+        const injectFunction = preferenceMapping[preference]
+        if (injectFunction) activeScripts.push(injectFunction())
+      })
+    }
+
+    return activeScripts
+  }
+
+  return <Head>{isCookieConsentAccepted && injectScripts(preferences)}</Head>
 }
 
 export default GlobalHead
