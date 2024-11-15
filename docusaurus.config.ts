@@ -63,10 +63,6 @@ export default {
       "classic",
       /** @type {import("@docusaurus/preset-classic").Options} */
       {
-        gtag: {
-          trackingID: "G-JEP3QDWT0G",
-          anonymizeIP: false,
-        },
         docs: {
           // docRootComponent: require.resolve("./src/components/docs/Layout.tsx"),
           sidebarPath: require.resolve("./sidebars.ts"),

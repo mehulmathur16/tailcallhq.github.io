@@ -603,3 +603,6 @@ export const reb2bScriptContent = `
     first.parentNode.insertBefore(script, first);};
     reb2b.SNIPPET_VERSION = "1.0.1";reb2b.load("0OV0VHL3P56Z");}();
 `
+export const gtagScriptContent = `
+function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-JEP3QDWT0G",{})
+`
