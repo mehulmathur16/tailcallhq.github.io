@@ -2,6 +2,8 @@ import React, {useEffect, useMemo, useState} from "react"
 import styles from "./styles.module.css"
 import clsx from "clsx"
 import {CookiePreferenceCategory} from "@site/src/constants"
+import Link from "@docusaurus/Link"
+import {pageLinks} from "@site/src/constants/routes"
 
 interface CookieConsentModalProps {
   open: boolean
@@ -83,6 +85,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
     setPreferences(updatedPreferences)
   }
 
+  const handleClose = () => {
+    setShowPreferences(false)
+    setPreferences(initialPreferences)
+
+    if (onClose) onClose()
+  }
+
   return (
     <>
       {open ? (
@@ -90,7 +99,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
           {/* Overlay */}
           <div
             className={clsx("block fixed inset-0 bg-black bg-opacity-50", styles.modalOverlay)}
-            onClick={onClose}
+            onClick={handleClose}
           ></div>
 
           {/* Modal Container */}
@@ -108,8 +117,14 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                   <span className="text-content-small">
                     Our website uses some cookies and records your IP address for the purposes of accessibility,
                     security, and managing your access to the telecommunication network. You can disable data collection
-                    and cookies by changing your browser settings, but it may affect how this website functions, Learn
-                    more.
+                    and cookies by changing your browser settings, but it may affect how this website functions.{" "}
+                    <Link
+                      href={pageLinks.privacyPolicy}
+                      className="text-tailCall-light-300 hover:text-tailCall-light-300 underline"
+                    >
+                      Learn more
+                    </Link>
+                    .
                   </span>
                   {showPreferences && (
                     <div className="grid grid-cols-2 gap-x-5">
@@ -161,7 +176,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                 src={require("@site/static/images/cookie-consent/close-btn.png").default}
                 height={16}
                 width={25}
-                onClick={onClose}
+                onClick={handleClose}
               />
             </div>
           </div>

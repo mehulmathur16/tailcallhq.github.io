@@ -31,13 +31,13 @@ export default function LayoutWrapper(props: Props): JSX.Element {
 
   const onAccept = useCallback(() => {
     const consentData = {accepted: true}
-    setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60}) // 30 days expiry
+    setCookie("userConsent", JSON.stringify(consentData), {maxAge: 366 * 24 * 60 * 60})
     handleCookieConsentModalClose()
   }, [setCookie])
 
   const onDeny = useCallback(() => {
     const consentData = {accepted: false}
-    setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60}) // 30 days expiry
+    setCookie("userConsent", JSON.stringify(consentData), {maxAge: 366 * 24 * 60 * 60})
     handleCookieConsentModalClose()
   }, [setCookie])
 
@@ -47,7 +47,7 @@ export default function LayoutWrapper(props: Props): JSX.Element {
         accepted: true,
         preferences: selectedPreferences,
       }
-      setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60})
+      setCookie("userConsent", JSON.stringify(consentData), {maxAge: 366 * 24 * 60 * 60})
       handleCookieConsentModalClose()
     },
     [setCookie],
@@ -63,7 +63,7 @@ export default function LayoutWrapper(props: Props): JSX.Element {
         onPartialAccept={onPartialAccept}
       />
       <GlobalHead
-        isCookieConsentAccepted={Boolean(cookies.userConsent)}
+        isCookieConsentAccepted={Boolean(cookies.userConsent?.accepted)}
         preferences={cookies.userConsent?.preferences}
       />
       <Layout {...props} />
