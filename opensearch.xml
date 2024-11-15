@@ -4,8 +4,8 @@
   <ShortName>Tailcall</ShortName>
   <Description>Search Tailcall</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://tailcall.run/tailcallhq.github.io/images/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://tailcall.run/tailcallhq.github.io/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://tailcall.run/tailcallhq.github.io/opensearch.xml" />
-  <moz:SearchForm>https://tailcall.run/tailcallhq.github.io/</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://tailcall.run/images/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://tailcall.run/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://tailcall.run/opensearch.xml" />
+  <moz:SearchForm>https://tailcall.run/</moz:SearchForm>
 </OpenSearchDescription>
