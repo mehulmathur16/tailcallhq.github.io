@@ -1,4 +1,5 @@
 import React from "react"
+import {pageLinks} from "./routes"
 
 export const githubRepoURL = "https://github.com/tailcallhq/tailcall"
 export const tailCallBenchmarkUrl = "https://github.com/tailcallhq/graphql-benchmarks#benchmark-results"
@@ -610,3 +611,21 @@ export const reb2bScriptContent = `
 export const gtagScriptContent = `
 function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-JEP3QDWT0G",{})
 `
+export const footerLinks: FooterLink[] = [
+  {
+    name: "Documentation",
+    link: pageLinks.docs,
+  },
+  {
+    name: "Blog",
+    link: tailCallBlogUrl,
+  },
+  {
+    name: "Contributors",
+    link: pageLinks.contributors,
+  },
+  {
+    name: "Privacy Policy",
+    link: pageLinks.privacyPolicy,
+  },
+]
