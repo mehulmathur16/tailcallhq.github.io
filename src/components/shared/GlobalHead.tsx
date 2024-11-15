@@ -29,7 +29,9 @@ const GlobalHead: React.FC<GlobalHeadProps> = ({isCookieConsentAccepted = false,
     }
 
     if (!preferences) {
-      Object.values(preferenceMapping).forEach((injectFunction) => activeScripts.push(injectFunction()))
+      Object.values(preferenceMapping).forEach((injectFunction, index: number) =>
+        activeScripts.push(<React.Fragment key={index}>{injectFunction()}</React.Fragment>),
+      )
     } else {
       preferences.forEach((preference) => {
         const injectFunction = preferenceMapping[preference]

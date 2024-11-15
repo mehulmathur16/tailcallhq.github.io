@@ -586,6 +586,11 @@ export const blogTagsMapping: Record<string, BlogTag[]> = {
   "Development Practices": [{label: "Best Practices", permalink: "/blog/tags/best-practices"}],
 }
 
+export enum CookiePreferenceCategory {
+  NECESSARY = "Necessary",
+  ANALYTICS = "Analytics",
+}
+
 export const reb2bScriptContent = `
 !function () {var reb2b = window.reb2b = window.reb2b || [];
     if (reb2b.invoked) return;reb2b.invoked = true;reb2b.methods = ["identify", "collect"];

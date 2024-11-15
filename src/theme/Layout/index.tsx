@@ -29,28 +29,29 @@ export default function LayoutWrapper(props: Props): JSX.Element {
     setShowCookieConsentModal(false)
   }, [])
 
-  // Function to handle consent acceptance and save in cookies
   const onAccept = useCallback(() => {
     const consentData = {accepted: true}
     setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60}) // 30 days expiry
     handleCookieConsentModalClose()
   }, [setCookie])
 
-  // Function to handle consent acceptance and save in cookies
   const onDeny = useCallback(() => {
     const consentData = {accepted: false}
     setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60}) // 30 days expiry
     handleCookieConsentModalClose()
   }, [setCookie])
 
-  const onPartialAccept = (selectedPreferences: String[]) => {
-    const consentData = {
-      accepted: true,
-      preferences: selectedPreferences,
-    }
-    setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60})
-    handleCookieConsentModalClose()
-  }
+  const onPartialAccept = useCallback(
+    (selectedPreferences: String[]) => {
+      const consentData = {
+        accepted: true,
+        preferences: selectedPreferences,
+      }
+      setCookie("userConsent", JSON.stringify(consentData), {maxAge: 30 * 24 * 60 * 60})
+      handleCookieConsentModalClose()
+    },
+    [setCookie],
+  )
 
   return (
     <>
@@ -61,7 +62,10 @@ export default function LayoutWrapper(props: Props): JSX.Element {
         onDeny={onDeny}
         onPartialAccept={onPartialAccept}
       />
-      <GlobalHead isCookieConsentAccepted={Boolean(cookies.userConsent)} />
+      <GlobalHead
+        isCookieConsentAccepted={Boolean(cookies.userConsent)}
+        preferences={cookies.userConsent?.preferences}
+      />
       <Layout {...props} />
     </>
   )

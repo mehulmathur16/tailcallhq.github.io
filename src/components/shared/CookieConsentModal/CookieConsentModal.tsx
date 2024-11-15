@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react"
 import styles from "./styles.module.css"
 import clsx from "clsx"
+import {CookiePreferenceCategory} from "@site/src/constants"
 
 interface CookieConsentModalProps {
   open: boolean
@@ -49,10 +50,8 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
   ]
 
   const initialPreferences: Array<PreferenceOption> = [
-    {name: "Neccessary", selected: true, readonly: true},
-    {name: "Analytics", selected: false},
-    {name: "Preference", selected: false},
-    {name: "Marketing", selected: false},
+    {name: CookiePreferenceCategory.NECESSARY, selected: true, readonly: true},
+    {name: CookiePreferenceCategory.ANALYTICS, selected: false},
   ]
 
   const [preferences, setPreferences] = useState(initialPreferences)
