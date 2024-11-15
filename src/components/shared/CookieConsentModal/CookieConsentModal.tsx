@@ -107,14 +107,14 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
             <div className="relative p-2 border border-solid border-tailCall-border-light-600">
               <div
                 className={clsx(
-                  "flex flex-col items-center justify-center py-8 px-16 gap-5 font-space-mono border border-solid border-tailCall-border-light-600",
+                  "flex flex-col items-center justify-center py-12 md:py-8 px-5 md:px-16 gap-5 font-space-mono border border-solid border-tailCall-border-light-600",
                   styles.bodyContainer,
                 )}
               >
                 <div className="flex flex-col items-center justify-center p-3 gap-2 text-center text-tailCall-light-300">
                   <img src={require("@site/static/images/cookie-consent/cookie.png").default} height={54} width={54} />
-                  <span className="text-title-medium">We Value Your Privacy</span>
-                  <span className="text-content-small">
+                  <span className="text-title-small md:text-title-medium">We Value Your Privacy</span>
+                  <span className="text-content-mini md:text-content-small">
                     Our website uses some cookies and records your IP address for the purposes of accessibility,
                     security, and managing your access to the telecommunication network. You can disable data collection
                     and cookies by changing your browser settings, but it may affect how this website functions.{" "}
@@ -127,13 +127,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                     .
                   </span>
                   {showPreferences && (
-                    <div className="grid grid-cols-2 gap-x-5">
+                    <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-x-5">
                       {preferences.map((preference: PreferenceOption, index: number) => {
                         return (
                           <span
                             key={index}
                             className={clsx(
-                              "flex cursor-pointer text-content-small gap-2 p-1",
+                              "flex cursor-pointer text-content-mini md:text-content-small gap-2 p-1",
                               preference.selected ? "text-tailCall-light-600" : "",
                             )}
                             onClick={() => handlePreferenceToggle(index)}
@@ -146,13 +146,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                     </div>
                   )}
                 </div>
-                <div className="flex gap-6">
+                <div className="flex flex-col md:flex-row gap-6">
                   {consentOptions.map((btn: ConsentOption, index: number) => {
                     return (
                       <span
                         key={index}
                         className={clsx(
-                          "py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer",
+                          "py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer text-center",
                           styles.consentOption,
                         )}
                         onClick={btn.onClick}
@@ -165,7 +165,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
               </div>
               <span
                 className={clsx(
-                  "absolute px-2 text-title-medium text-tailCall-light-300 bg-black",
+                  "absolute px-2 text-title-small md:text-title-medium text-tailCall-light-300 bg-black",
                   styles.modalHeading,
                 )}
               >

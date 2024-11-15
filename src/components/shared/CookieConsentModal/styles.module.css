@@ -6,6 +6,7 @@
   max-height: 80%;
   overflow-y: scroll;
   z-index: calc(var(--ifm-z-index-fixed) + 2);
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .modalOverlay {
@@ -44,4 +45,19 @@
   background-image: radial-gradient(circle, #121214 10%, transparent 10%);
   background-size: 8px 8px;
   background-repeat: repeat;
+}
+
+@media (max-width: 767px) {
+  .cookieConsentModal {
+    max-height: 90%;
+    width: 100%;
+  }
+
+  .modalHeading {
+    width: max-content;
+  }
+
+  .closeBtn {
+    right: 15px;
+  }
 }
