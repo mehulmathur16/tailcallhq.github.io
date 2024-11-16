@@ -1,10 +1,16 @@
 import React from "react"
+import {pageLinks} from "./routes"
 
 export const githubRepoURL = "https://github.com/tailcallhq/tailcall"
 export const tailCallBenchmarkUrl = "https://github.com/tailcallhq/graphql-benchmarks#benchmark-results"
 export const tailCallBlogUrl = "https://blog.tailcall.run/"
 export const codeSandboxUrl = "https://codesandbox.io/p/github/tailcallhq/tailcall-sandbox/main"
 export const zapierLink = "https://hooks.zapier.com/hooks/catch/2793322/3a1gxp2/"
+export const playgroundAdsConversionId = "AW-16578154380/3FH_CJrawsgZEIyfiuE9"
+
+export enum cookieConstants {
+  USER_CONSENT = "userConsent",
+}
 
 export const algoliaConstants = {
   categoryFacet: "category",
@@ -606,3 +612,21 @@ export const reb2bScriptContent = `
 export const gtagScriptContent = `
 function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-JEP3QDWT0G",{})
 `
+export const footerLinks: FooterLink[] = [
+  {
+    name: "Documentation",
+    link: pageLinks.docs,
+  },
+  {
+    name: "Blog",
+    link: tailCallBlogUrl,
+  },
+  {
+    name: "Contributors",
+    link: pageLinks.contributors,
+  },
+  {
+    name: "Privacy Policy",
+    link: pageLinks.privacyPolicy,
+  },
+]
