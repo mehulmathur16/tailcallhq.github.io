@@ -595,6 +595,7 @@ export const blogTagsMapping: Record<string, BlogTag[]> = {
 export enum CookiePreferenceCategory {
   NECESSARY = "Necessary",
   ANALYTICS = "Analytics",
+  PREFERENCE = "Preference",
 }
 
 export const reb2bScriptContent = `

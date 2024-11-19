@@ -54,6 +54,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
   const initialPreferences: Array<PreferenceOption> = [
     {name: CookiePreferenceCategory.NECESSARY, selected: true, readonly: true},
     {name: CookiePreferenceCategory.ANALYTICS, selected: false},
+    {name: CookiePreferenceCategory.PREFERENCE, selected: false},
   ]
 
   const [preferences, setPreferences] = useState(initialPreferences)
