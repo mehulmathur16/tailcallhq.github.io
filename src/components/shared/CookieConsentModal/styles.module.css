@@ -4,6 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-height: 80%;
+  max-width: 80%;
   overflow-y: scroll;
   z-index: calc(var(--ifm-z-index-fixed) + 2);
   box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
