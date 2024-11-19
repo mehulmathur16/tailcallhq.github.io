@@ -10,7 +10,7 @@ type Props = WrapperProps<typeof LayoutType>
 
 export default function LayoutWrapper(props: Props): JSX.Element {
   const {
-    showCookieConsentModal,
+    isCookieConsentModalVisible,
     openCookieConsentModal,
     closeCookieConsentModal,
     onAccept,
@@ -28,7 +28,7 @@ export default function LayoutWrapper(props: Props): JSX.Element {
   return (
     <>
       <CookieConsentModal
-        open={showCookieConsentModal}
+        open={isCookieConsentModalVisible}
         onClose={closeCookieConsentModal}
         onAccept={onAccept}
         onDeny={onDeny}

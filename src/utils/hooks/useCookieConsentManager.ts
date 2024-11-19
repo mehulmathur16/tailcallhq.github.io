@@ -3,15 +3,15 @@ import {useCookieConsent} from "./useCookieConsent"
 
 export const useCookieConsentManager = () => {
   const {getCookieConsent, setCookieConsent} = useCookieConsent()
-  const [showCookieConsentModal, setShowCookieConsentModal] = useState(false)
+  const [isCookieConsentModalVisible, setIsCookieConsentModalVisible] = useState(false)
   const cookieConsent = getCookieConsent()
 
   const openCookieConsentModal = useCallback(() => {
-    setShowCookieConsentModal(true)
+    setIsCookieConsentModalVisible(true)
   }, [])
 
   const closeCookieConsentModal = useCallback(() => {
-    setShowCookieConsentModal(false)
+    setIsCookieConsentModalVisible(false)
   }, [])
 
   const onAccept = useCallback(() => {
@@ -40,7 +40,7 @@ export const useCookieConsentManager = () => {
 
   return {
     cookieConsent,
-    showCookieConsentModal,
+    isCookieConsentModalVisible,
     openCookieConsentModal,
     closeCookieConsentModal,
     onAccept,
