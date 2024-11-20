@@ -120,11 +120,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                     Our website uses cookies to enhance your browsing experience, improve website functionality, and
                     analyze website traffic. We also collect and process your IP address for purposes such as ensuring
                     security and maintaining network performance.
-                    <br />
+                  </span>
+                  <span className="text-content-mini md:text-content-small">
                     You can choose which cookies to accept by selecting your preferences below. Essential cookies are
                     necessary for the website to function and cannot be disabled. By clicking “Accept All” you consent
                     to the use of all cookies.
-                    <br />
+                  </span>
+                  <span className="text-content-mini md:text-content-small">
                     For more information, please review our{" "}
                     <Link
                       href={pageLinks.privacyPolicy}
@@ -154,7 +156,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col md:flex-row gap-6">
+                <div className={clsx("flex flex-col md:flex-row gap-6", styles.consentOptionsContainer)}>
                   {consentOptions.map((btn: ConsentOption, index: number) => {
                     return (
                       <span
