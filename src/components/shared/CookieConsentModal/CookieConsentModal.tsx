@@ -154,7 +154,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                       <span
                         key={index}
                         className={clsx(
-                          "py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer text-center",
+                          "flex items-center justify-center md:whitespace-nowrap py-1 px-3 text-title-medium bg-tailCall-dark-400 border border-solid border-tailCall-dark-300 cursor-pointer text-center",
                           styles.consentOption,
                         )}
                         onClick={btn.onClick}
