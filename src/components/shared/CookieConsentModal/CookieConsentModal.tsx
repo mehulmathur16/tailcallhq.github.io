@@ -41,12 +41,12 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
             },
           }
         : {
-            text: "Manage Settings",
+            text: "Manage Preferences",
             onClick: () => setShowPreferences(true),
           },
     ],
     {
-      text: "Deny",
+      text: "Accept Only Essential",
       onClick: onDeny,
     },
   ]
@@ -117,14 +117,22 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                   <img src={require("@site/static/images/cookie-consent/cookie.png").default} height={54} width={54} />
                   <span className="text-title-small md:text-title-medium">We Value Your Privacy</span>
                   <span className="text-content-mini md:text-content-small">
-                    Our website uses some cookies and records your IP address for the purposes of accessibility,
-                    security, and managing your access to the telecommunication network. You can disable data collection
-                    and cookies by changing your browser settings, but it may affect how this website functions.{" "}
+                    Our website uses cookies to enhance your browsing experience, improve website functionality, and
+                    analyze website traffic. We also collect and process your IP address for purposes such as ensuring
+                    security and maintaining network performance.
+                  </span>
+                  <span className="text-content-mini md:text-content-small">
+                    You can choose which cookies to accept by selecting your preferences below. Essential cookies are
+                    necessary for the website to function and cannot be disabled. By clicking “Accept All” you consent
+                    to the use of all cookies.
+                  </span>
+                  <span className="text-content-mini md:text-content-small">
+                    For more information, please review our{" "}
                     <Link
                       href={pageLinks.privacyPolicy}
                       className="text-tailCall-light-300 hover:text-tailCall-light-300 underline"
                     >
-                      Learn more
+                      Privacy Policy
                     </Link>
                     .
                   </span>
@@ -148,7 +156,7 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({open, onAccept, 
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col md:flex-row gap-6">
+                <div className={clsx("flex flex-col md:flex-row gap-6", styles.consentOptionsContainer)}>
                   {consentOptions.map((btn: ConsentOption, index: number) => {
                     return (
                       <span
