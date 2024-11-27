@@ -41,6 +41,7 @@ enum LinkType {
   Operation
   Htpasswd
   Jwks
+  Grpc
 }
 ```
 
@@ -138,7 +139,7 @@ When using the `Cert` link type, specify the path to the certificate file. Ensur
 Example use case:
 
 - Securing communication between the GraphQL server and clients.
-- Enhancing privacy and security by encrypting data in transit.
+  - Enhancing privacy and security by encrypting data in transit.
 
 ### Key
 
@@ -159,3 +160,6 @@ The `Htpasswd` link type allows the importation of an [`htpasswd`](https://httpd
 ### Jwks
 
 The `Jwks` link type enables the importation of a [`JWKS`](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-key-sets) file. This file facilitates the provision of detailed access control through [JWT authentication](../auth.md#jwt-authentication).
+
+### Grpc
+The `Grpc` link type enables the GraphQL server to understand that the specified source is a gRPC endpoint that supports reflection. 
