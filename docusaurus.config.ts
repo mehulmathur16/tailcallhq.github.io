@@ -107,8 +107,6 @@ export default {
       logo: {
         alt: "My Site Logo",
         src: "icons/companies/tailcall.svg",
-        height: "2.5rem",
-        width: "150px",
       },
       items: [
         {to: "/", label: "Home", position: "left", activeBaseRegex: "^/$"},
