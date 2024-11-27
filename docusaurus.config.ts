@@ -60,7 +60,7 @@ export default {
     },
   },
   future: {
-    experimental_faster: true, // Required for faster production builds. For reference: https://docusaurus.io/blog/releases/3.6#adoption-strategy
+    experimental_faster: false, // Required for faster production builds. For reference: https://docusaurus.io/blog/releases/3.6#adoption-strategy
   },
   presets: [
     [
