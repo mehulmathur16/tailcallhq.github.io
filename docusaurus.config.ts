@@ -24,31 +24,6 @@ export default {
     {
       tagName: "script",
       attributes: {
-        async: "true",
-        src: "https://tag.clearbitscripts.com/v1/pk_498a76355e253f5c7f4e7c7bed78748e/tags.js",
-        referrerPolicy: "strict-origin-when-cross-origin",
-      },
-    },
-    {
-      tagName: "script",
-      attributes: {
-        type: "text/javascript",
-      },
-      innerHTML: `
-      !function () {var reb2b = window.reb2b = window.reb2b || [];
-    if (reb2b.invoked) return;reb2b.invoked = true;reb2b.methods = ["identify", "collect"];
-    reb2b.factory = function (method) {return function () {var args = Array.prototype.slice.call(arguments);
-    args.unshift(method);reb2b.push(args);return reb2b;};};
-    for (var i = 0; i < reb2b.methods.length; i++) {var key = reb2b.methods[i];reb2b[key] = reb2b.factory(key);}
-    reb2b.load = function (key) {var script = document.createElement("script");script.type = "text/javascript";script.async = true;
-    script.src = "https://s3-us-west-2.amazonaws.com/b2bjsstore/b/" + key + "/reb2b.js.gz";
-    var first = document.getElementsByTagName("script")[0];
-    first.parentNode.insertBefore(script, first);};
-    reb2b.SNIPPET_VERSION = "1.0.1";reb2b.load("0OV0VHL3P56Z");}();`,
-    },
-    {
-      tagName: "script",
-      attributes: {
         type: "application/ld+json",
       },
       innerHTML: JSON.stringify({
@@ -62,7 +37,8 @@ export default {
   url: "https://tailcall.run",
   baseUrl: "/tailcallhq.github.io/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "throw",
+  onBrokenAnchors: "throw",
   favicon: "images/favicon.ico",
 
   // GitHub pages deployment config.
@@ -83,15 +59,14 @@ export default {
       },
     },
   },
+  future: {
+    experimental_faster: false, // Required for faster production builds. For reference: https://docusaurus.io/blog/releases/3.6#adoption-strategy
+  },
   presets: [
     [
       "classic",
       /** @type {import("@docusaurus/preset-classic").Options} */
       {
-        gtag: {
-          trackingID: "G-JEP3QDWT0G",
-          anonymizeIP: false,
-        },
         docs: {
           // docRootComponent: require.resolve("./src/components/docs/Layout.tsx"),
           sidebarPath: require.resolve("./sidebars.ts"),
@@ -116,7 +91,7 @@ export default {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "icons/companies/taicall.svg",
+    image: "icons/companies/tailcall.svg",
     algolia: {
       appId: "X27WDVHRQ3",
       apiKey: "35bc100f239853cd8a7195b23ed7393b",
@@ -131,8 +106,7 @@ export default {
       hideOnScroll: true,
       logo: {
         alt: "My Site Logo",
-        src: "icons/companies/taicall.svg",
-        height: "2.5rem",
+        src: "icons/companies/tailcall.svg",
       },
       items: [
         {to: "/", label: "Home", position: "left", activeBaseRegex: "^/$"},
@@ -162,73 +136,6 @@ export default {
   } satisfies Preset.ThemeConfig,
   plugins: [
     [
-      "@docusaurus/plugin-client-redirects",
-      {
-        redirects: [
-          {
-            from: "/about",
-            to: "/",
-          },
-          {
-            from: "/docs/guides/n+1/",
-            to: "/docs/graphql-n-plus-one-problem-solved-tailcall/",
-          },
-          {
-            from: "/docs/intro/architecture",
-            to: "/docs/",
-          },
-          {
-            from: "/docs/intro/cli/",
-            to: "/docs/tailcall-graphql-cli/",
-          },
-          {
-            from: "/docs/intro/operators/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/",
-          },
-          {
-            from: "/docs/intro/server",
-            to: "/docs/",
-          },
-          {
-            from: "/docs/getting-started-with-graphql/",
-            to: "/docs/",
-          },
-          {
-            from: "/docs/operators/add-field/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#addfield-directive",
-          },
-          {
-            from: "/docs/operators/graphql/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#graphql-directive",
-          },
-          {
-            from: "/docs/operators/http/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#http-directive",
-          },
-          {
-            from: "/docs/operators/server/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#server-directive",
-          },
-          {
-            from: "/docs/operators/telemetry/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#telemetry-directive",
-          },
-          {
-            from: "/docs/operators/upstream/",
-            to: "/docs/tailcall-dsl-graphql-custom-directives/#upstream-directive",
-          },
-          {
-            from: "/docs/n+1/introduction/",
-            to: "/docs/graphql-n-plus-one-problem-solved-tailcall/",
-          },
-          {
-            from: "/enterprise/",
-            to: "/",
-          },
-        ],
-      },
-    ],
-    [
       "./plugins/custom-blog-plugin.ts",
       {
         path: "blog",
@@ -254,6 +161,7 @@ export default {
           type: "all",
           copyright: `Copyright © ${new Date().getFullYear()} Tailcall, Inc.`,
         },
+        onInlineAuthors: "ignore", // TODO: Create an authors.yml file to reduce authors info. redundancy
       },
     ],
     [
