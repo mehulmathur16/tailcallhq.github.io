@@ -36,7 +36,6 @@ const Testimonials = () => {
           <span className="bg-tailCall-yellow rounded-lg text-black px-SPACE_01 ml-SPACE_02">love us!</span>
         </Heading>
       </div>
-      <TrustedByMarquee title="Trusted by developers at" logos={companies} />
       <div className="flex flex-col space-y-SPACE_10 md:flex-row md:space-x-SPACE_02 md:space-y-0 mt-SPACE_18">
         {testimonials.map((feedback) => (
           <CustomerFeedbackCard
@@ -50,6 +49,7 @@ const Testimonials = () => {
           />
         ))}
       </div>
+      <TrustedByMarquee title="Trusted by" logos={companies} />
     </Section>
   )
 }
