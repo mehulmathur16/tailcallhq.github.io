@@ -24,8 +24,6 @@ export const companies: PartnerImage[] = [
   {name: "Sinch", logo: require("@site/static/icons/companies/sinch.png").default},
 ]
 
-
-
 export const partnerImages: PartnerImage[] = [
   {
     name: "Digital Ocean",

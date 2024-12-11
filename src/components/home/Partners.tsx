@@ -7,12 +7,7 @@ const Partners = () => {
     window.open("/docs/deploy-graphql-github-actions/", "_blank")
   }
 
-  return (
-    <TrustedByMarquee
-      logos={partnerImages}
-      onClick={handleClick}
-    />
-  )
+  return <TrustedByMarquee logos={partnerImages} onClick={handleClick} />
 }
 
 export default Partners

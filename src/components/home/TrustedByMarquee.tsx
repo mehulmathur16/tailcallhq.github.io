@@ -18,16 +18,16 @@ interface TrustedByMarqueeProps {
 }
 
 const TrustedByMarquee: React.FC<TrustedByMarqueeProps> = ({
-                                                             title = "Deploy Anywhere",
-                                                             logos,
-                                                             onClick,
-                                                             titleClassName = "text-content-small font-bold sm:text-title-tiny lg:text-title-small text-tailCall-light-500 text-center space-x-1",
-                                                             desktopClassName = "hidden sm:flex space-x-SPACE_16 mt-SPACE_10 overflow-hidden",
-                                                             mobileClassName = "sm:hidden flex items-center justify-around flex-wrap mt-SPACE_06 space-y-SPACE_02"
-                                                           }) => {
+  title = "Deploy Anywhere",
+  logos,
+  onClick,
+  titleClassName = "text-content-small font-bold sm:text-title-tiny lg:text-title-small text-tailCall-light-500 text-center space-x-1",
+  desktopClassName = "hidden sm:flex space-x-SPACE_16 mt-SPACE_10 overflow-hidden",
+  mobileClassName = "sm:hidden flex items-center justify-around flex-wrap mt-SPACE_06 space-y-SPACE_02",
+}) => {
   const handleClick = () => {
     if (onClick) {
-      onClick();
+      onClick()
     }
   }
 
@@ -41,27 +41,20 @@ const TrustedByMarquee: React.FC<TrustedByMarqueeProps> = ({
         <img src={partner.logo} alt={partner.name} className="max-w-[152px]" />
       )}
     </div>
-  );
+  )
 
   return (
-    <section
-      className={`px-10 md:px-0 ${onClick ? 'cursor-pointer' : ''}`}
-      onClick={handleClick}
-    >
+    <section className={`px-10 md:px-0 ${onClick ? "cursor-pointer" : ""}`} onClick={handleClick}>
       <div className={titleClassName}>
         <GreaterThanUnderscoreIcon className="h-4 w-6" />
         <span>{title}</span>
       </div>
 
       <Marquee autoFill>
-        <div className={desktopClassName}>
-          {logos.map(renderLogo)}
-        </div>
+        <div className={desktopClassName}>{logos.map(renderLogo)}</div>
       </Marquee>
 
-      <div className={mobileClassName}>
-        {logos.map(renderLogo)}
-      </div>
+      <div className={mobileClassName}>{logos.map(renderLogo)}</div>
     </section>
   )
 }
