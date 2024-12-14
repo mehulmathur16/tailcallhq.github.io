@@ -18,9 +18,7 @@ export default function BlogPostItem({children, className}: Props): JSX.Element 
   return (
     <BlogPostItemContainer className={clsx(containerClassName, className)}>
       <BlogPostItemHeader />
-      {frontMatter.image && (
-        <img src={frontMatter.image} alt={`Cover Image for ${frontMatter.title}`} />
-      )}
+      {frontMatter.image && <img src={frontMatter.image} alt={`Cover Image for ${frontMatter.title}`} />}
       <BlogPostItemContent>{children}</BlogPostItemContent>
       <BlogPostItemFooter />
     </BlogPostItemContainer>
