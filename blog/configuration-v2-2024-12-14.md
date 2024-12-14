@@ -97,7 +97,7 @@ The new folder structure with linked configurations would look as follows:
 └── products.graphql
 ```
 
-In the above example, `main.graphql` links to `users.graphql` and `products.graphql` using the `@link` directive. The merge algorithm combines these linked configurations into a single effective configuration.
+In the above example, `main.yml` links to `users.graphql` and `products.graphql` using the `@link` directive. The merge algorithm combines these linked configurations into a single effective configuration.
 
 ```yml title="main.yml" showLineNumbers
 server:
@@ -107,8 +107,20 @@ configs:
   - src: "./products.graphql"
 ```
 
-This would clearly separate the runtime and schema configurations, making it easier to manage and predict the final configuration outcome.
+This would clearly separate the runtime and schema configurations, making it easier to manage and predict the final configuration outcome. The tailcall command would work like before, but with a more predictable outcome.
+
+```bash title="Command"
+tailcall start ./main.yml
+```
+
+However, like before starting with a `.graphql` file would still be possible.
+
+```bash title="Command"
+tailcall start ./users.graphql
+```
 
 ## Migration Strategy
 
 The proposed changes are designed to simplify the configuration process, and the migration should be relatively straightforward for most users. Existing configurations can be readily split into separate runtime and schema files. The clear separation of concerns and the simplified merging process will make future configuration management more predictable and less error-prone. Tools and documentation will be provided to further facilitate a smooth transition to the new design.
+
+Would love to hear about your thoughts on this proposed design. Feel free to reach out to me on the usual channels!
