@@ -152,3 +152,13 @@ type RecentBlogPostItem = {
   authors: Author[]
   permalink: string
 }
+
+type FooterLink = {
+  name: string
+  link: string
+}
+
+type FooterItem = {
+  title: string
+  items: FooterLink[]
+}

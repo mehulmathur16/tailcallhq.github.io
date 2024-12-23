@@ -53,13 +53,20 @@ The `check` command allows for files. Specify each file path, separated by a spa
 tailcall check --schema ./path/to/file1.graphql ./path/to/file2.graphql
 ```
 
-### --format
+### --verify-ssl
 
-This is an optional command which allows changing the format of the input file. It accepts `gql` or `graphql`,`yml` or `yaml`, `json` .
+Controls SSL/TLS certificate verification when loading remote configuration files.
+
+- Type: Boolean
+- Default: `true`
 
 ```bash
-tailcall check ./path/to/file1.graphql ./path/to/file2.graphql --format json
+tailcall check --verify-ssl false < FILE_PATHS > ...
 ```
+
+:::warning
+Disabling SSL verification is not recommended for production environments as it makes your connections vulnerable to man-in-the-middle attacks.
+:::
 
 ## start
 
@@ -79,6 +86,21 @@ The `start` command allows for files and supports loading configurations over HT
 tailcall start ./path/to/file1.graphql ./path/to/file2.graphql http://example.com/file2.graphql
 ```
 
+### --verify-ssl
+
+Controls SSL/TLS certificate verification when loading remote configuration files.
+
+- Type: Boolean
+- Default: `true`
+
+```bash
+tailcall start --verify-ssl false < FILE_PATHS > ...
+```
+
+:::warning
+Disabling SSL verification is not recommended for production environments as it makes your connections vulnerable to man-in-the-middle attacks.
+:::
+
 ## init
 
 The `init` command bootstraps a new Tailcall project. It creates the necessary GraphQL schema files in the provided file path.
@@ -89,13 +111,17 @@ tailcall init <file_path>
 
 This command prompts for file creation and configuration, creating the following files:
 
-|                 File Name | Description                                                                                                                             |
-| ------------------------: | --------------------------------------------------------------------------------------------------------------------------------------- |
-| [.tailcallrc.schema.json] | Provides autocomplete in your editor when the configuration is written in `json` or `yml` format.                                       |
-|          [.graphqlrc.yml] | An IDE configuration that references your GraphQL configuration (if it's in `.graphql` format) and the following `.tailcallrc.graphql`. |
-|     [.tailcallrc.graphql] | Contains Tailcall specific auto-completions for `.graphql` format.                                                                      |
+| File Name | Description |
+| --------: | ----------- |
 
-[.tailcallrc.schema.json]: https://github.com/tailcallhq/tailcall/blob/main/generated/.tailcallrc.schema.json
+<!-- TODO: uncomment when the Taillcall configuration will in separate file -->
+<!-- | [.tailcallrc.schema.json] | Provides autocomplete in your editor for the tailcall configuration written in `json` or `yml` format.                                       | -->
+
+| [.graphqlrc.yml] | An IDE configuration that references your GraphQL schema and the following `.tailcallrc.graphql`. |
+| [.tailcallrc.graphql] | Contains Tailcall specific auto-completions for `.graphql` format. |
+
+<!-- [.tailcallrc.schema.json]: https://github.com/tailcallhq/tailcall/blob/main/generated/.tailcallrc.schema.json -->
+
 [.graphqlrc.yml]: https://the-guild.dev/graphql/config/docs
 [.tailcallrc.graphql]: https://github.com/tailcallhq/tailcall/blob/main/generated/.tailcallrc.graphql
 
@@ -151,13 +177,13 @@ To generate a Tailcall GraphQL configuration, provide a configuration file to th
     },
     {
       "proto": {
-        "src": "./news.proto"
+        "src": "./news.proto",
+        "url": "http://127.0.0.1:8080/rpc"
       }
     }
   ],
   "output": {
-    "path": "./output.graphql",
-    "format": "graphQL"
+    "path": "./output.graphql"
   },
   "schema": {
     "query": "Query",
@@ -202,9 +228,9 @@ inputs:
       fieldName: "createPost"
   - proto:
       src: "./news.proto"
+      url: "http://127.0.0.1:8080/rpc"
 output:
   path: "./output.graphql"
-  format: "graphQL"
 schema:
   query: "Query"
   mutation: "Mutation"
@@ -344,36 +370,38 @@ The `inputs` section specifies the sources from which the GraphQL configuration 
     }
     ```
 
-4.  **Proto:** For protobuf files, specify the path to the proto file (`src`).
+4.  **Proto:**
 
-    <Tabs>
-      <TabItem value="json" label="JSON">
-      ```json
-      {
-        "proto": {
-          "src": "./path/to/file.proto"
-        }
-      }
-      ```
-      </TabItem>
-      <TabItem value="yml" label="YML">
-      ```yml
-      - proto:
-          src: "./news.proto"
-      ```
-      </TabItem>
-    </Tabs>
+    - Specify the **path to the proto file** (`src`) to help Tailcall create a schema and understand the gRPC methods to call when a field is queried.
+    - Specify the **gRPC URL** (`url`) where the gRPC service is hosted.
+    - Include a **boolean parameter** `connectRPC` (optional). If set to `true`, the proto file will be used to generate the schema, but the communication between Tailcall and the upstream will happen using the [Connect-RPC protocol](https://connectrpc.com/docs/protocol/).
+    - Specify **a set of directories** `protoPaths` (optional) to search for imported proto files. Works like the `--proto_path` flag in the [protocol compiler](https://protobuf.dev/programming-guides/proto3/#importing).
+
+        <Tabs>
+          <TabItem value="json" label="JSON">
+          ```json
+          {
+            "proto": {
+              "src": "./path/to/file.proto",
+              "url": "http://127.0.0.1:8080/rpc"
+            }
+          }
+          ```
+          </TabItem>
+          <TabItem value="yml" label="YML">
+          ```yml
+          - proto:
+              src: "./news.proto"
+              url: "http://127.0.0.1:8080/rpc"
+          ```
+          </TabItem>
+        </Tabs>
 
 ### Output
 
-The `output` section specifies the path and format for the generated GraphQL configuration.
+The `output` section specifies the path for the generated GraphQL configuration.
 
 - **path**: The file path where the output will be saved.
-- **format**: The format of the output file. Supported formats are `json`, `yml`, and `graphQL`.
-
-:::tip
-You can also change the format of the configuration later using the [check](#--format) command.
-:::
 
 ### Preset
 
@@ -543,7 +571,7 @@ preset:
    }
    ```
 
-   By leveraging field names to derive type names, the schema becomes more intuitive and aligned with the data it represents, enhancing overall readability and understanding.
+   By leveraging field names to derive type names, the schema becomes more intuitive and aligned with the data it represents, enhancing overall readability and understanding. You can learn more about config autogen [here](./config-generation.md).
 
 ### LLM
 
