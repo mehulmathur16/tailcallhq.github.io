@@ -635,25 +635,8 @@ export const footerItems: FooterItem[] = [
         link: pageLinks.releases,
       },
       {
-        name: "Tutorial",
-        link: pageLinks.docs,
-      },
-      {
         name: "Learn",
         link: pageLinks.introduction,
-      },
-    ],
-  },
-  {
-    title: "Products",
-    items: [
-      {
-        name: "GraphOS",
-        link: pageLinks.docs,
-      },
-      {
-        name: "Tailcall Config",
-        link: pageLinks.docs,
       },
     ],
   },
@@ -663,14 +646,6 @@ export const footerItems: FooterItem[] = [
       {
         name: "Blogs",
         link: pageLinks.blog,
-      },
-      {
-        name: "About",
-        link: pageLinks.docs,
-      },
-      {
-        name: "Careers",
-        link: pageLinks.docs,
       },
       {
         name: "Privacy Policy",
