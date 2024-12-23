@@ -1,10 +1,11 @@
 import React from "react"
 import Link from "@docusaurus/Link"
-import {socials, tailCallBlogUrl} from "@site/src/constants"
+import {footerLinks, socials} from "@site/src/constants"
 import TailcallLogo from "@site/static/icons/companies/tailcall-white.svg"
-import {pageLinks} from "@site/src/constants/routes"
+import {useCookieConsentManager} from "./CookieConsentProvider"
 
 const Footer = (): JSX.Element => {
+  const {openCookieConsentModal} = useCookieConsentManager()
   const year = new Date().getFullYear()
   return (
     <footer
@@ -13,37 +14,30 @@ const Footer = (): JSX.Element => {
     >
       <TailcallLogo className="w-[120px] h-10 z-10" />
       <div className="text-content-tiny sm:text-title-small space-x-SPACE_06 text-tailCall-light-500 z-10">
-        <Link
-          href={pageLinks.docs}
-          className="text-tailCall-light-500 hover:text-tailCall-light-300 hover:no-underline"
-        >
-          Documentation
-        </Link>
-        {/*<Link*/}
-        {/*  href={pageLinks.about}*/}
-        {/*  className="text-tailCall-light-500 hover:text-tailCall-light-300 hover:no-underline"*/}
-        {/*>*/}
-        {/*  About*/}
-        {/*</Link>*/}
-        <Link
-          href={tailCallBlogUrl}
-          className="text-tailCall-light-500 hover:text-tailCall-light-300 hover:no-underline"
-        >
-          Blog
-        </Link>
-        <Link
-          href={pageLinks.contributors}
-          className="text-tailCall-light-500 hover:text-tailCall-light-300 hover:no-underline"
-        >
-          Contributors
-        </Link>
+        {footerLinks.map((footerLink: FooterLink, index: number) => {
+          return (
+            <Link
+              key={index}
+              href={footerLink.link}
+              className="text-tailCall-light-500 hover:text-tailCall-light-300 hover:no-underline"
+            >
+              {footerLink.name}
+            </Link>
+          )
+        })}
       </div>
 
-      <div className="flex flex-col-reverse sm:flex-row items-center gap-y-SPACE_04 sm:justify-between w-[100%] max-w-7xl sm:mt-SPACE_10 z-10">
-        <p className="text-content-tiny text-tailCall-light-700 font-space-mono font-normal">
+      <div className="flex flex-col sm:flex-row items-center gap-y-SPACE_04 sm:justify-between w-[100%] max-w-7xl sm:mt-SPACE_10 z-10">
+        <p
+          className="text-content-tiny text-tailCall-light-700 font-space-mono font-normal cursor-pointer mb-0 sm:mb-5 order-2 sm:order-1"
+          onClick={openCookieConsentModal}
+        >
+          Cookie Settings
+        </p>
+        <p className="text-content-tiny text-tailCall-light-700 font-space-mono font-normal mb-0 sm:mb-5 order-3 sm:order-2">
           Copyright © {year} Tailcall, Inc.
         </p>
-        <div className="space-x-SPACE_04">
+        <div className="space-x-SPACE_04 order-1 sm:order-3">
           {socials.map((social) => (
             <Link href={social.href} className="cursor-pointer" key={social.id}>
               <social.image className="h-6 w-6" />

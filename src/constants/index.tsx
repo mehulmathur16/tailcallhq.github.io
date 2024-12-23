@@ -1,15 +1,28 @@
 import React from "react"
+import {pageLinks} from "./routes"
 
 export const githubRepoURL = "https://github.com/tailcallhq/tailcall"
 export const tailCallBenchmarkUrl = "https://github.com/tailcallhq/graphql-benchmarks#benchmark-results"
 export const tailCallBlogUrl = "https://blog.tailcall.run/"
 export const codeSandboxUrl = "https://codesandbox.io/p/github/tailcallhq/tailcall-sandbox/main"
 export const zapierLink = "https://hooks.zapier.com/hooks/catch/2793322/3a1gxp2/"
+export const playgroundAdsConversionId = "AW-16578154380/3FH_CJrawsgZEIyfiuE9"
+
+export enum cookieConstants {
+  USER_CONSENT = "userConsent",
+}
 
 export const algoliaConstants = {
   categoryFacet: "category",
   searchModalPlaceholder: "What do you want to know about graphql ?",
 }
+
+export const companies: PartnerImage[] = [
+  {name: "Dream11", logo: require("@site/static/icons/companies/dream11.png").default},
+  {name: "AfterShip", logo: require("@site/static/icons/companies/aftership.png").default},
+  {name: "Optum", logo: require("@site/static/icons/companies/optum.png").default},
+  {name: "Sinch", logo: require("@site/static/icons/companies/sinch.png").default},
+]
 
 export const partnerImages: PartnerImage[] = [
   {
@@ -524,21 +537,21 @@ export enum Theme {
 export const testimonials: CustomerFeedback[] = [
   {
     id: 1,
-    citation: `Having a completely open-source GraphQL solution under my control is a dream. I can customize everything to fit our exact needs, with full transparency and flexibility. No more blocking on backend teams—I can iterate and build and deploy the frontend faster than ever before.`,
+    citation: `With a fully open-source GraphQL solution at your disposal, you gain complete control to tailor it precisely to your requirements. This approach provides unparalleled transparency and flexibility, allowing you to work independently of backend teams. You can iterate, develop, and deploy your frontend applications more efficiently than ever before.`,
     designation: `Sr. Frontend Engineer`,
     name: "John Doe",
     department: "Front-end",
   },
   {
     id: 2,
-    citation: `I love that I no longer have to wrangle with GraphQL for the frontend teams. It saves me a ton of time, reduces complexity, and lets me focus on what I do best—optimizing our microservices. The clear separation of concerns has made collaboration smoother, and now with Tailcall's static verification, I can expose APIs with even more confidence.`,
+    citation: `By eliminating the need to manage GraphQL for frontend teams, you can focus on your core responsibilities—optimizing microservices and streamlining backend operations. The clear separation of concerns enhances collaboration, while Tailcall's static verification ensures you can expose APIs with confidence and reliability.`,
     designation: `Sr. Backend Engineer - Big Co. Inc.`,
     name: "John Doe",
     department: "Backend",
   },
   {
     id: 3,
-    citation: `Switching to a battle-tested, open-source GraphQL solution has been a game-changer. It’s rock-solid, easy to manage, and scales effortlessly. I no longer worry about security gaps, and the faster iteration cycle means I can focus on bigger challenges. It's like having a superpower in my toolkit!`,
+    citation: `Adopting a proven, open-source GraphQL solution transforms your operational workflows. It offers robust reliability, simplifies management, and scales seamlessly to meet growing demands. With enhanced security and faster iteration cycles, you can dedicate more time to strategic challenges and high-impact projects.`,
     designation: `Sr. Frontend Engineer - Big Co. Inc.`,
     name: "John Doe",
     department: "Ops",
@@ -585,3 +598,44 @@ export const blogTagsMapping: Record<string, BlogTag[]> = {
   ],
   "Development Practices": [{label: "Best Practices", permalink: "/blog/tags/best-practices"}],
 }
+
+export enum CookiePreferenceCategory {
+  NECESSARY = "Necessary",
+  ANALYTICS = "Analytics",
+  PREFERENCE = "Preference",
+  MARKETING = "Marketing",
+}
+
+export const reb2bScriptContent = `
+!function () {var reb2b = window.reb2b = window.reb2b || [];
+    if (reb2b.invoked) return;reb2b.invoked = true;reb2b.methods = ["identify", "collect"];
+    reb2b.factory = function (method) {return function () {var args = Array.prototype.slice.call(arguments);
+    args.unshift(method);reb2b.push(args);return reb2b;};};
+    for (var i = 0; i < reb2b.methods.length; i++) {var key = reb2b.methods[i];reb2b[key] = reb2b.factory(key);}
+    reb2b.load = function (key) {var script = document.createElement("script");script.type = "text/javascript";script.async = true;
+    script.src = "https://s3-us-west-2.amazonaws.com/b2bjsstore/b/" + key + "/reb2b.js.gz";
+    var first = document.getElementsByTagName("script")[0];
+    first.parentNode.insertBefore(script, first);};
+    reb2b.SNIPPET_VERSION = "1.0.1";reb2b.load("0OV0VHL3P56Z");}();
+`
+export const gtagScriptContent = `
+function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-JEP3QDWT0G",{})
+`
+export const footerLinks: FooterLink[] = [
+  {
+    name: "Documentation",
+    link: pageLinks.docs,
+  },
+  {
+    name: "Blog",
+    link: tailCallBlogUrl,
+  },
+  {
+    name: "Contributors",
+    link: pageLinks.contributors,
+  },
+  {
+    name: "Privacy Policy",
+    link: pageLinks.privacyPolicy,
+  },
+]
