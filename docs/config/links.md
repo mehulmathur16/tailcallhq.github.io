@@ -1,60 +1,28 @@
 ---
-title: "@link"
-description: The @link directive is used for bringing external resources into your GraphQL schema.
-slug: ../link-directive
+title: "links"
+description: The links configuration is used for bringing external resources into your GraphQL schema.
+slug: ../links-config
 ---
 
-The `@link` directive is defined as follows:
+The `links` configuration is defined in a YAML file as follows:
 
-```graphql title="Directive Definition" showLineNumbers
-directive @link(
-  """
-  Source path or URL of the external resource
-  """
-  src: String!
-
-  """
-  Type of the external resource
-  """
-  type: LinkType!
-
-  """
-  Optional identifier for the link
-  """
-  id: String
-
-  """
-  Optional headers for gRPC reflection server requests
-  """
-  headers: [InputKeyValue!]
-
-  """
-  Optional directories to search for imported proto files.
-  """
-  proto_paths: [String!]
-) on SCHEMA
-
-"""
-Available types for external resources
-"""
-enum LinkType {
-  Config
-  Protobuf
-  Script
-  Cert
-  Key
-  Operation
-  Htpasswd
-  Jwks
-  Grpc
-}
+```yaml title="Runtime Configuration" showLineNumbers
+links:
+  - src: "path_or_url_of_external_resource"
+    type: "LinkType"
+    id: "optional_identifier"
+    headers:
+      - key: "header_key"
+        value: "header_value"
+    protoPaths:
+      - "path to proto"
 ```
 
-The `@link` directive is used for bringing external resources into your GraphQL schema. It makes it easier to include configurations, .proto files for gRPC services, and other files into your schema. With this directive, external resources are either merged with or used effectively in the importing configuration.
+The `links` configuration is used for bringing external resources into your GraphQL schema. It makes it easier to include configurations, .proto files for gRPC services, and other files into your schema. With this configuration, external resources are either merged with or used effectively in the importing configuration.
 
 ## How it Works
 
-The `@link` directive requires specifying a source `src`, the resource's type `type`, and an optional identifier `id`.
+The `links` configuration requires specifying a source `src`, the resource's type `type`, and an optional identifier `id` for every entry:
 
 - `src`: The source of the link is defined here. It can be either a URL or a file path. When a file path is given, it's relative to the file's location that is importing the link. (This field also supports Mustache template)
 
@@ -66,20 +34,116 @@ The `@link` directive requires specifying a source `src`, the resource's type `t
 
 - `proto_paths`: This is an optional field that specifies additional directories to search for imported proto files. It only takes effect when `type` is `Protobuf`.
 
+### Linking other configs
+
+With `links` you can link [schema files](#config) that will be merged together.
+
+The schema definitions (i.e. types, unions, enums) are merged by the [federation composition rules](https://www.apollographql.com/docs/graphos/reference/federation/composition-rules)
+
+For example, consider the following files:
+
+```yaml title="Runtime Config"
+server:
+  port: 8000
+
+upstream:
+  httpCache: 10
+  batch:
+    delay: 10
+
+links:
+  - src: a.graphql
+    type: Config
+  - src: b.graphql
+    type: Config
+```
+
+```graphql title="a.graphql"
+schema {
+  query: Query
+}
+
+type User {
+  id: Int
+  age: Int
+}
+
+union Media = Book | Movie
+
+type Query {
+  media: media
+    @http(url: "http://jsonplaceholder.typicode.com/media")
+}
+```
+
+```graphql title="b.graphql"
+schema {
+  query: Query
+}
+
+type Query {
+  user(id: Int!): User
+    @http(
+      url: "http://jsonplaceholder.typicode.com/users/{{.args.id}}"
+    )
+}
+
+union Media = Book | Podcast
+
+type User {
+  id: Int
+  name: String
+}
+```
+
+The merged result config will look like this:
+
+```graphql
+union Media = Book | Movie | Podcast
+
+type Query {
+  media: Foo
+    @http(url: "http://jsonplaceholder.typicode.com/media")
+  post(id: Int!): Post
+    @http(
+      url: "http://jsonplaceholder.typicode.com/users/{{.args.id}}"
+    )
+}
+
+type User {
+  id: Int
+  age: Int
+  name: String
+}
+```
+
 ## Example
 
-The following example illustrates how to utilize the `@link` directive to incorporate a Protocol Buffers (.proto) file for a gRPC service into your GraphQL schema.
+The following example illustrates how to utilize the `links` configuration to incorporate a Protocol Buffers (.proto) file for a gRPC service into your GraphQL schema.
 
-```graphql showLineNumbers
-schema
-  @server(port: 8000)
-  @upstream(httpCache: 42, batch: {delay: 10})
-  @link(
-    id: "news"
+```yaml title="config.yaml"
+server:
+  port: 8000
+
+upstream:
+  httpCache: 10
+  batch:
+    delay: 10
+
+links:
+  - id: schema
+    src: schema.graphql
+    type: Config
+  - id: news
     src: "./src/grpc/news.proto"
     type: Protobuf
-    headers: [{key: "authorization", value: "Bearer 123"}]
-  ) {
+    headers:
+      - key: authorization
+        value: Bearer 123
+```
+
+```graphql title="schema.graphql" showLineNumbers
+schema {
   query: Query
 }
 
@@ -102,23 +166,30 @@ type NewsData {
 
 ## Example using Mustache template
 
-The following example illustrates how to utilize the `@link` directive to incorporate a Protocol Buffers (.proto) file for a gRPC service into your GraphQL schema using Mustache template.
+The following example illustrates how to utilize the `links` configuration to incorporate a Protocol Buffers (.proto) file for a gRPC service into your GraphQL schema using Mustache template.
 
-```graphql showLineNumbers
-schema
-  @server(port: 8000)
-  @upstream(httpCache: 42, batch: {delay: 10})
-  @link(
-    id: "news"
+```yaml title="config.yaml"
+server:
+  port: 8000
+
+upstream:
+  httpCache: 10
+  batch:
+    delay: 10
+
+links:
+  - id: schema
+    src: schema.graphql
+    type: Config
+  - id: news
     src: "{{.env.NEWS_PROTO_PATH}}"
     type: Protobuf
-    headers: [
-      {key: "authorization", value: "{{.env.BEARER}}"}
-    ]
-  ) {
-  query: Query
-}
+    headers:
+      - key: authorization
+        value: "{{.env.BEARER}}"
+```
 
+```graphql title="schema.graphql" showLineNumbers
 type Query {
   news: NewsData!
     @grpc(method: "news.NewsService.GetAllNews")
@@ -145,7 +216,7 @@ and populate it with the values given.
 
 ## Supported Types
 
-The `@link` directive enriches your configuration by supporting the integration of external resources. Each link type is designed to serve a specific purpose, enhancing the functionality and flexibility of your schema. Below is a detailed overview of each supported link type:
+The `links` configuration enriches your configuration by supporting the integration of external resources. Each link type is designed to serve a specific purpose, enhancing the functionality and flexibility of your schema. Below is a detailed overview of each supported link type:
 
 ### Config
 
