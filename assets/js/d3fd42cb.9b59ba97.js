@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[5587],{96004:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/tailcallhq.github.io/blog","page":1,"postsPerPage":25,"totalPages":1,"totalCount":25,"blogDescription":"List of blog posts on Tailcall blog","blogTitle":"Feed of Tailcall blogs"}}')}}]);
