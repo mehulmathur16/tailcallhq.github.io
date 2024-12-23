@@ -118,9 +118,9 @@ export default {
     // Replace with your project's social card
     image: "icons/companies/taicall.svg",
     algolia: {
-      appId: "X27WDVHRQ3",
-      apiKey: "35bc100f239853cd8a7195b23ed7393b",
-      indexName: "tailcall",
+      appId: "LJUJPB0HA1",
+      apiKey: "494e28ceea6eb969483e93c13f529c16",
+      indexName: "mehulmathur16io",
       contextualSearch: false,
       searchParameters: {
         facetFilters: [],
