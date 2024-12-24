@@ -621,21 +621,36 @@ export const reb2bScriptContent = `
 export const gtagScriptContent = `
 function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-JEP3QDWT0G",{})
 `
-export const footerLinks: FooterLink[] = [
+
+export const footerItems: FooterItem[] = [
   {
-    name: "Documentation",
-    link: pageLinks.docs,
+    title: "Developers",
+    items: [
+      {
+        name: "Docs",
+        link: pageLinks.docs,
+      },
+      {
+        name: "Releases",
+        link: pageLinks.releases,
+      },
+      {
+        name: "Learn",
+        link: pageLinks.introduction,
+      },
+    ],
   },
   {
-    name: "Blog",
-    link: tailCallBlogUrl,
-  },
-  {
-    name: "Contributors",
-    link: pageLinks.contributors,
-  },
-  {
-    name: "Privacy Policy",
-    link: pageLinks.privacyPolicy,
+    title: "Company",
+    items: [
+      {
+        name: "Blogs",
+        link: pageLinks.blog,
+      },
+      {
+        name: "Privacy Policy",
+        link: pageLinks.privacyPolicy,
+      },
+    ],
   },
 ]

@@ -157,3 +157,8 @@ type FooterLink = {
   name: string
   link: string
 }
+
+type FooterItem = {
+  title: string
+  items: FooterLink[]
+}
