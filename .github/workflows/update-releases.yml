@@ -30,7 +30,7 @@ jobs:
           EXISTING_PR=$(gh pr list --state open --base develop --json headRefName --jq '.[] | select(.headRefName | startswith("update-releases")) | .headRefName')
           if [ -n "$EXISTING_PR" ]; then
             echo "An existing PR is already open. Exiting workflow."
-            exit 0
+            exit 1
           else
             echo "No existing PR found. Proceeding with new PR creation."
           fi
