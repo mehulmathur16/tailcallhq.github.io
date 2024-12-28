@@ -22,6 +22,12 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Runtime configuration",
+      collapsed: false,
+      items: ["runtime-config", "config/links", "config/server", "config/telemetry", "config/upstream"],
+    },
+    {
+      type: "category",
       label: "Directives",
       collapsed: false,
       items: [
@@ -34,14 +40,10 @@ const sidebars: SidebarsConfig = {
         "directives/grpc",
         "directives/http",
         "directives/js",
-        "directives/link",
         "directives/modify",
         "directives/omit",
         "directives/protected",
         "directives/rest",
-        "directives/server",
-        "directives/telemetry",
-        "directives/upstream",
         "directives/discriminate",
       ].sort(),
     },

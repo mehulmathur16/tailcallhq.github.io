@@ -8,4 +8,7 @@ export const pageLinks = {
   contributors: "/docs/contribution-guidelines",
   privacyPolicy: "/privacy/",
   // enterprise: "/enterprise",
+  releases: "/releases",
+  blog: "/blog",
+  about: "/about",
 }
