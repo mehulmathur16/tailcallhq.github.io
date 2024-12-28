@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Check for Existing Pull Request
+      - name: Check for an Existing Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
