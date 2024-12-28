@@ -23,14 +23,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Run npm Install
-        run: npm install
-
-      - name: Run Releases Docs Generator Script
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node release-notes-generator.js
-
       - name: Check for Existing Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,6 +34,15 @@ jobs:
           else
             echo "No existing PR found. Proceeding with new PR creation."
           fi
+
+      - name: Run npm Install
+        run: npm install
+
+      - name: Run Releases Docs Generator Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node release-notes-generator.js
+
 
       - name: Create Pull Request
         if: env.existing_pr_branch == ''
