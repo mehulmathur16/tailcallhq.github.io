@@ -38,7 +38,7 @@ jobs:
           EXISTING_PR=$(gh pr list --state open --base develop --json headRefName --jq '.[] | select(.headRefName | startswith("update-releases")) | .headRefName')
           echo "existing_pr_branch=$EXISTING_PR" >> $GITHUB_ENV
 
-      - name: Create New Pull Request
+      - name: Create Pull Request
         if: env.existing_pr_branch == ''
         uses: peter-evans/create-pull-request@v7
         with:
