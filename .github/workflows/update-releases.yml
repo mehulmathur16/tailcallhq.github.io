@@ -1,8 +1,7 @@
 name: Update Releases
 
 on:
-  schedule:
-    - cron: "0 */4 * * *"
+  push:
 
 permissions:
   contents: write
@@ -43,5 +42,5 @@ jobs:
           title: "chore: updated releases"
           body: |
             This is an auto-generated pull request that updates releases.
-          reviewers: tusharmath
+          reviewers: mehulmathur16
           maintainer-can-modify: true
