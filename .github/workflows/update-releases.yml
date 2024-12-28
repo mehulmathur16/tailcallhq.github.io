@@ -36,7 +36,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           EXISTING_PR=$(gh pr list --state open --base develop --json headRefName --jq '.[] | select(.headRefName | startswith("update-releases")) | .headRefName')
-          echo "existing_pr_branch=$EXISTING_PR" >> $GITHUB_ENV
+          if [ -n "$EXISTING_PR" ]; then
+            echo "An existing PR is already open. Exiting workflow."
+            exit 0
+          else
+            echo "No existing PR found. Proceeding with new PR creation."
+          fi
 
       - name: Create Pull Request
         if: env.existing_pr_branch == ''
