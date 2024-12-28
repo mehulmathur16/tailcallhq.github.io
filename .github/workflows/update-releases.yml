@@ -31,7 +31,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node release-notes-generator.js
 
+      - name: Check for Existing Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=$(gh pr list --state open --base develop --json headRefName --jq '.[] | select(.headRefName | startswith("update-releases")) | .headRefName')
+          echo "pr_branch=$PR" >> $GITHUB_ENV
+
       - name: Create pull request
+        if: env.pr_branch == ''
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
