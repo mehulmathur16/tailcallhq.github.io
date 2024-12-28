@@ -36,26 +36,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           EXISTING_PR=$(gh pr list --state open --base develop --json headRefName --jq '.[] | select(.headRefName | startswith("update-releases")) | .headRefName')
-          echo "pr_branch=$EXISTING_PR" >> $GITHUB_ENV
-
-      - name: Compare Changes with Existing PR
-        if: env.pr_branch != ''
-        run: |
-          git fetch origin ${{ env.pr_branch }}
-          git diff origin/${{ env.pr_branch }} > diff.txt
-          if [ -s diff.txt ]; then
-            echo "changes_detected=true" >> $GITHUB_ENV
-          else
-            echo "changes_detected=false" >> $GITHUB_ENV
-
-      - name: Close Existing PR
-        if: env.pr_branch != '' && env.changes_detected == 'true'
-        run: |
-          EXISTING_PR_NUMBER=$(gh pr list --state open --base develop --json number --jq '.[] | select(.headRefName | startswith("update-releases")) | .number')
-          gh pr close $EXISTING_PR_NUMBER --delete-branch
+          echo "existing_pr_branch=$EXISTING_PR" >> $GITHUB_ENV
 
       - name: Create New Pull Request
-        if: env.pr_branch == '' || env.changes_detected == 'true'
+        if: env.existing_pr_branch == ''
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
